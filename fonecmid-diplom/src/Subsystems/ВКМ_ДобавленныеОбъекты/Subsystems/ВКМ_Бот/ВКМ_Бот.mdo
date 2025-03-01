@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Subsystem xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9c751873-af27-4755-8acd-f14996a30dbc">
+  <name>ВКМ_Бот</name>
+  <synonym>
+    <key>ru</key>
+    <value>Бот</value>
+  </synonym>
+  <includeHelpInContents>true</includeHelpInContents>
+  <includeInCommandInterface>true</includeInCommandInterface>
+  <content>Document.ВКМ_ВходящийHTTPЗапрос</content>
+  <content>Catalog.ВКМ_УчётныеЗаписиТелеграм</content>
+  <content>Catalog.ВКМ_УведомленияТелеграмБоту</content>
+  <parentSubsystem>Subsystem.ВКМ_ДобавленныеОбъекты</parentSubsystem>
+</mdclass:Subsystem>

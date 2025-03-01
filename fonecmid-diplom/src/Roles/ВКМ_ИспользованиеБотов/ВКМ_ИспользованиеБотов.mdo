@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Role xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="97ecf361-5815-4a75-b047-dbce4dc04d43">
+  <name>ВКМ_ИспользованиеБотов</name>
+  <synonym>
+    <key>ru</key>
+    <value>ВКМ использование ботов</value>
+  </synonym>
+</mdclass:Role>

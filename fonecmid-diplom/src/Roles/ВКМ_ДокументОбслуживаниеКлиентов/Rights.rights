@@ -448,11 +448,4 @@
 			<value>true</value>
 		</right>
 	</object>
-	<object>
-		<name>Document.РеализацияТоваровУслуг.Command.ВКМ_АктОбОказанныхУслугах</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
 </Rights>

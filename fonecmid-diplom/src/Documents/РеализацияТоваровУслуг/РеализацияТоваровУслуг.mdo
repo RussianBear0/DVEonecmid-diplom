@@ -407,17 +407,4 @@
   <templates uuid="8318bd79-8f3b-4828-a2fc-74275678bc73">
     <name>ВКМ_АктОбОказанныхУслугах</name>
   </templates>
-  <commands uuid="eb17163d-c402-44be-bfa9-c74339270680">
-    <name>ВКМ_АктОбОказанныхУслугах</name>
-    <synonym>
-      <key>ru</key>
-      <value>АктОбОказанныхУслугах</value>
-    </synonym>
-    <group>FormCommandBarImportant</group>
-    <commandParameterType>
-      <types>DocumentRef.РеализацияТоваровУслуг</types>
-    </commandParameterType>
-    <parameterUseMode>Multiple</parameterUseMode>
-    <representation>Auto</representation>
-  </commands>
 </mdclass:Document>

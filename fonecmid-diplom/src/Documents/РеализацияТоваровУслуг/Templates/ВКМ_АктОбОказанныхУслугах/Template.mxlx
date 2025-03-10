@@ -133,7 +133,11 @@
 	<rowsItem>
 		<index>0</index>
 		<row>
-			<empty>true</empty>
+			<c>
+				<c>
+					<f>0</f>
+				</c>
+			</c>
 		</row>
 	</rowsItem>
 	<rowsItem>
@@ -479,6 +483,10 @@
 	<defaultFormatIndex>27</defaultFormatIndex>
 	<height>18</height>
 	<vgRows>18</vgRows>
+	<merge>
+		<r>0</r>
+		<c>0</c>
+	</merge>
 	<merge>
 		<r>3</r>
 		<c>2</c>

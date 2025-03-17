@@ -7,19 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>НаборДанных1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Клиент</dataPath>
-			<field>Клиент</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Клиент</v8:content>
-				</v8:item>
-			</title>
-			<role>
-				<dcscom:dimension>true</dcscom:dimension>
-			</role>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>СуммаПоНоменклатуре</dataPath>
 			<field>СуммаПоНоменклатуре</field>
 			<title xsi:type="v8:LocalStringType">
@@ -43,49 +30,50 @@
 			</role>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>ВКМ_Договор</dataPath>
-			<field>ВКМ_Договор</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>СуммаПлатыПоДоговору</dataPath>
-			<field>СуммаПлатыПоДоговору</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Сумма платы по договору</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>ВКМ_Клиент</dataPath>
-			<field>ВКМ_Клиент</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Контрагент</dataPath>
 			<field>Контрагент</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Номенклатура</dataPath>
 			<field>Номенклатура</field>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаПлатыПоУслугам</dataPath>
+			<field>СуммаПлатыПоУслугам</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма платы по услугам</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Заказ</dataPath>
+			<field>Заказ</field>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
-	ОстаткиТоваровОбороты.СуммаРасход КАК СуммаПоНоменклатуре,
-	ВКМ_ВыполненныеКлиентуРаботыОбороты.ВКМ_Клиент КАК Клиент,
-	ВКМ_ВыполненныеКлиентуРаботыОбороты.ВКМ_Договор КАК Договор,
-	ВКМ_ВыполненныеКлиентуРаботыОбороты.ВКМ_Договор.ВКМ_СуммаПлаты КАК СуммаПлатыПоДоговору
+	ЕСТЬNULL(ОбработкаЗаказовОбороты.СуммаОтгрузкиОборот, 0) КАК СуммаПлатыПоУслугам,
+	ОбработкаЗаказовОбороты.Контрагент КАК Контрагент,
+	ОбработкаЗаказовОбороты.Договор КАК Договор,
+	ЕСТЬNULL(ОстаткиТоваровОбороты.СуммаРасход, 0) КАК СуммаПоНоменклатуре
 ИЗ
-	РегистрНакопления.ВКМ_ВыполненныеКлиентуРаботы.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Период, ) КАК ВКМ_ВыполненныеКлиентуРаботыОбороты
+	РегистрНакопления.ОбработкаЗаказов.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Период, ) КАК ОбработкаЗаказовОбороты
 		ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.ОстаткиТоваров.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Период, ) КАК ОстаткиТоваровОбороты
-		ПО ВКМ_ВыполненныеКлиентуРаботыОбороты.ВКМ_Клиент = ОстаткиТоваровОбороты.Контрагент</query>
+		ПО ОбработкаЗаказовОбороты.Контрагент = ОстаткиТоваровОбороты.Контрагент
+ГДЕ
+	ОбработкаЗаказовОбороты.Договор.ВКМ_ПериодДействияКонец = &amp;КонецПериода</query>
 	</dataSet>
-	<totalField>
-		<dataPath>СуммаПлатыПоДоговору</dataPath>
-		<expression>Сумма(СуммаПлатыПоДоговору)</expression>
-	</totalField>
 	<totalField>
 		<dataPath>СуммаПоНоменклатуре</dataPath>
 		<expression>Сумма(СуммаПоНоменклатуре)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаПлатыПоУслугам</dataPath>
+		<expression>Сумма(СуммаПлатыПоУслугам)</expression>
 	</totalField>
 	<parameter>
 		<name>НачалоПериода</name>
@@ -103,7 +91,8 @@
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>false</useRestriction>
-		<expression>&amp;Период.ДатаНачала</expression>
+		<expression>&amp;ПериодОтчёта.ДатаНачала</expression>
+		<use>Always</use>
 	</parameter>
 	<parameter>
 		<name>КонецПериода</name>
@@ -121,39 +110,27 @@
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>false</useRestriction>
-		<expression>&amp;Период.ДатаОкончания</expression>
-	</parameter>
-	<parameter>
-		<name>Период</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Период</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>v8:StandardPeriod</v8:Type>
-		</valueType>
-		<value xsi:type="v8:StandardPeriod">
-			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-		</value>
-		<useRestriction>false</useRestriction>
+		<expression>&amp;ПериодОтчёта.ДатаОкончания</expression>
+		<use>Always</use>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Основной</dcsset:name>
-		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Выставленные акты</v8:content>
+			</v8:item>
+		</dcsset:presentation>
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Клиент</dcsset:field>
+					<dcsset:field>Контрагент</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Договор</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>СуммаПлатыПоДоговору</dcsset:field>
+					<dcsset:field>СуммаПлатыПоУслугам</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>СуммаПоНоменклатуре</dcsset:field>
@@ -162,18 +139,34 @@
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:parameter>НачалоПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcsset:userSettingID>22e11845-8be0-4fef-8d3a-3816d8865034</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcsset:userSettingID>7f816420-c341-4012-a062-106f3b920b10</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ПериодОтчёта</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
 						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
-					<dcsset:userSettingID>fce5fd87-4ad3-4f5d-b20e-29d6fe643a2f</dcsset:userSettingID>
+					<dcsset:userSettingID>4cc183c5-77d8-4335-b0d2-2114834e6658</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 			</dcsset:outputParameters>

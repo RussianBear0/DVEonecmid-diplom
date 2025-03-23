@@ -17,6 +17,7 @@
   <content>CalculationRegister.ВКМ_Удержания</content>
   <content>AccumulationRegister.ВКМ_ВзаиморасчетыССотрудниками</content>
   <content>AccumulationRegister.ВКМ_ЗапланированныеОтпуска</content>
+  <content>AccumulationRegister.ВКМ_ВыставленныеКОплатеРаботы</content>
   <subsystems>ВКМ_Справочники</subsystems>
   <subsystems>ВКМ_Документы</subsystems>
   <subsystems>ВКМ_Бот</subsystems>
